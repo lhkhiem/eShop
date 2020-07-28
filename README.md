@@ -6,6 +6,8 @@
 - Micrisoft.EntityFrameworkCore.SqlServer
 - Micrisoft.EntityFrameworkCore.Design
 - Micrisoft.EntityFrameworkCore.Tools
+- Micrisoft.Extentions.Configuration.FileExtensions
+- Micrisoft.Extentions.Configuration.Json
 ## Youtube tutorial
 - https://gianhangnho.com
 ## How to configure and run
