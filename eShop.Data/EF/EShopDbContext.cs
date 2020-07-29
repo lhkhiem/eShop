@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using eShop.Data.Extensions;
 
 namespace eShop.Data.EF
 {
@@ -14,6 +15,8 @@ namespace eShop.Data.EF
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Configure using Fluent API
+
             modelBuilder.ApplyConfiguration(new CartConfiguration());
 
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
@@ -30,6 +33,8 @@ namespace eShop.Data.EF
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
+            //Date seeding
+            modelBuilder.Seed();
             //base.OnModelCreating(modelBuilder);
         }
 
