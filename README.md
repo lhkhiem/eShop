@@ -9,6 +9,7 @@
 - Micrisoft.Extentions.Configuration.FileExtensions
 - Micrisoft.Extentions.Configuration.Json
 - Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+- Microsoft.AspNetCore.Http.Features
 ## Youtube tutorial
 - https://gianhangnho.com
 ## How to configure and run

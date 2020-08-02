@@ -1,13 +1,13 @@
-﻿using eShop.Application.Catalog.Products.Dtos.Public;
-using eShop.Application.Catalog.Products.Dtos;
-using eShop.Application.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using eShop.Data.EF;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using eShop.ViewModels.Catalog.Products;
+using eShop.ViewModels.Common;
+using eShop.ViewModels.Catalog.Products.Public;
 
 namespace eShop.Application.Catalog.Products
 {
