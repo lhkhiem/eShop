@@ -12,7 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Data", "eShop.Data\eShop.Data.csproj", "{497B9550-A07D-4296-94C4-8AF68F06E205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShop.Application", "eShop.Application\eShop.Application.csproj", "{C8F8941F-E90B-4165-813E-CC69FDEB9958}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Application", "eShop.Application\eShop.Application.csproj", "{C8F8941F-E90B-4165-813E-CC69FDEB9958}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Utilities", "eShop.Utilities\eShop.Utilities.csproj", "{4CB8B431-75FA-40F3-B3EE-7502806B66DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.ViewModels", "eShop.ViewModels\eShop.ViewModels.csproj", "{614C6824-6A8F-44EC-B374-0709AA165302}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShop.BackendApi", "eShop.BackendApi\eShop.BackendApi.csproj", "{60E99D75-2125-4B89-AC82-5600C5408402}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +38,18 @@ Global
 		{C8F8941F-E90B-4165-813E-CC69FDEB9958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8F8941F-E90B-4165-813E-CC69FDEB9958}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8F8941F-E90B-4165-813E-CC69FDEB9958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CB8B431-75FA-40F3-B3EE-7502806B66DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB8B431-75FA-40F3-B3EE-7502806B66DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB8B431-75FA-40F3-B3EE-7502806B66DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB8B431-75FA-40F3-B3EE-7502806B66DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614C6824-6A8F-44EC-B374-0709AA165302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614C6824-6A8F-44EC-B374-0709AA165302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614C6824-6A8F-44EC-B374-0709AA165302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614C6824-6A8F-44EC-B374-0709AA165302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E99D75-2125-4B89-AC82-5600C5408402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E99D75-2125-4B89-AC82-5600C5408402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E99D75-2125-4B89-AC82-5600C5408402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E99D75-2125-4B89-AC82-5600C5408402}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
