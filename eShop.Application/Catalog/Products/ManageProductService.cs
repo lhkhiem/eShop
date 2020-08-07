@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using eShop.ViewModels.Catalog.Products;
 using eShop.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using System.IO;
 using eShop.Application.Common;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace eShop.Application.Catalog.Products
 {
@@ -19,11 +20,13 @@ namespace eShop.Application.Catalog.Products
     {
         private readonly EShopDbContext _context;
         private readonly IStorageService _storageService;
+
         public ManageProductService(EShopDbContext context, IStorageService storageService)
         {
             _context = context;
             _storageService = storageService;
         }
+
         public async Task AddViewCount(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
@@ -71,8 +74,10 @@ namespace eShop.Application.Catalog.Products
                 };
             }
             _context.Products.Add(product);
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return product.Id;
         }
+
         public async Task<int> Delete(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
@@ -88,6 +93,7 @@ namespace eShop.Application.Catalog.Products
 
             return await _context.SaveChangesAsync();
         }
+
         public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
             //1. Select join
@@ -131,6 +137,7 @@ namespace eShop.Application.Catalog.Products
             };
             return pageResult;
         }
+
         public async Task<int> Update(ProductUpdateRequest request)
         {
             var product = await _context.Products.FindAsync(request.Id);
@@ -155,6 +162,7 @@ namespace eShop.Application.Catalog.Products
             }
             return await _context.SaveChangesAsync();
         }
+
         public async Task<bool> UpdatePrice(int productId, decimal newPrice)
         {
             var product = await _context.Products.FindAsync(productId);
@@ -170,6 +178,7 @@ namespace eShop.Application.Catalog.Products
             product.Stock += addedQuantity;
             return await _context.SaveChangesAsync() > 0;
         }
+
         private async Task<string> SaveFile(IFormFile file)
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -177,10 +186,12 @@ namespace eShop.Application.Catalog.Products
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return fileName;
         }
+
         public Task<int> AddImages(int productId, List<IFormFile> files)
         {
             throw new NotImplementedException();
         }
+
         public Task<int> RemoveImages(int imageId)
         {
             throw new NotImplementedException();
@@ -194,6 +205,31 @@ namespace eShop.Application.Catalog.Products
         public Task<List<ProductImageViewModel>> GetListImage(int productId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ProductViewModel> GetById(int productId, string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync
+                (x => x.ProductId == productId && x.LanguageId == languageId);
+            var productViewModel = new ProductViewModel()
+            {
+                Id = product.Id,
+                DateCreated = product.DateCreated,
+                Description = productTranslation != null ? productTranslation.Description : null,
+                LanguageId = productTranslation.LanguageId,
+                Details = productTranslation != null ? productTranslation.Details : null,
+                Name = productTranslation != null ? productTranslation.Name : null,
+                OriginalPrice = product.OriginalPrice,
+                Price = product.Price,
+                SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
+                SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
+                SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
+                Stock = product.Stock,
+                ViewCount = product.ViewCount
+            };
+
+            return productViewModel;
         }
     }
 }

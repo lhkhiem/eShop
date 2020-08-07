@@ -25,7 +25,7 @@ namespace eShop.Data.Migrations
                     ImagePath = table.Column<string>(maxLength: 200, nullable: false),
                     Caption = table.Column<string>(maxLength: 200, nullable: true),
                     IsDefault = table.Column<bool>(nullable: false),
-                    DateCreate = table.Column<DateTime>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     SortOrder = table.Column<int>(nullable: false),
                     FileSize = table.Column<int>(nullable: false)
                 },

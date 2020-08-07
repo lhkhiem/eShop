@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eShop.Application.Catalog.Products;
+using eShop.Application.Common;
 using eShop.Data.EF;
 using eShop.Utilities.Constants;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,9 @@ namespace eShop.BackendApi
             services.AddDbContext<EShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
             //Declare DI
+            services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IPublicProductService, PublicProductService>();
+            services.AddTransient<IManageProductService, ManageProductService>();
             services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
