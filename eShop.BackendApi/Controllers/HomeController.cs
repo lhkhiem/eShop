@@ -9,6 +9,8 @@ using eShop.BackendApi.Models;
 
 namespace eShop.BackendApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,6 +20,7 @@ namespace eShop.BackendApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return Ok("Home ok");
