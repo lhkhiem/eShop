@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using eShop.Application.Catalog.Products;
 using eShop.Application.Common;
+using eShop.Application.System.Users;
 using eShop.Data.EF;
+using eShop.Data.Entities;
 using eShop.Utilities.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,10 +34,17 @@ namespace eShop.BackendApi
         {
             services.AddDbContext<EShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<EShopDbContext>()
+                .AddDefaultTokenProviders();
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IPublicProductService, PublicProductService>();
             services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient<IUserService, UserService>();
             services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
@@ -66,7 +76,7 @@ namespace eShop.BackendApi
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json","Swagger eShop V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger eShop V1");
             });
 
             app.UseEndpoints(endpoints =>
