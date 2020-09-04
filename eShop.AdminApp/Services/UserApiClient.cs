@@ -1,4 +1,6 @@
-﻿using eShop.ViewModels.System.Users;
+﻿using eShop.ViewModels.Common;
+using eShop.ViewModels.System.Users;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace eShop.AdminApp.Services
     public class UserApiClient : IUserApiClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
 
-        public UserApiClient(IHttpClientFactory httpClientFactory)
+        public UserApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         public async Task<string> Authenticate(LoginRequest request)
@@ -28,6 +32,21 @@ namespace eShop.AdminApp.Services
             var response = await client.PostAsync("/api/users/authenticate", httpContent);
             var token = await response.Content.ReadAsStringAsync();
             return token;
+        }
+
+        Task<string> IUserApiClient.Authenticate(LoginRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<PagedResult<UserVm>> IUserApiClient.GetUsersPagings(GetUserPagingRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IUserApiClient.RegisterUser(RegisterRequest registerRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }
