@@ -4,9 +4,9 @@ using System.Text;
 
 namespace eShop.ViewModels.Common
 {
-    public class PagingRequestBase
+    public class PagingRequestBase:RequestBase
     {
-        public int pageIndex { get; set; }
-        public int pageSize { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
     }
 }
