@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,23 +29,24 @@ namespace eShop.AdminApp.Services
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var response = await client.PostAsync("/api/users/authenticate", httpContent);
             var token = await response.Content.ReadAsStringAsync();
             return token;
         }
-
-        Task<string> IUserApiClient.Authenticate(LoginRequest request)
+        public async Task<PagedResult<UserVm>> GetUsersPagings(GetUserPagingRequest request)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.BearerToken);
+            var response = await client.GetAsync($"/api/users/paging?pageIndex={request.PageIndex}" +
+                $"&pageSize={request.PageSize}&keyword={request.Keyword}");
+            var body = await response.Content.ReadAsStringAsync();
+            var users =  JsonConvert.DeserializeObject<PagedResult<UserVm>>(body);
+            return users;
         }
 
-        Task<PagedResult<UserVm>> IUserApiClient.GetUsersPagings(GetUserPagingRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IUserApiClient.RegisterUser(RegisterRequest registerRequest)
+        public Task<bool> RegisterUser(RegisterRequest registerRequest)
         {
             throw new NotImplementedException();
         }
