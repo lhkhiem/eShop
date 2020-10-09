@@ -7,6 +7,7 @@ using eShop.AdminApp.Services;
 using eShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace eShop.AdminApp.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;
@@ -35,19 +37,19 @@ namespace eShop.AdminApp.Controllers
                 Keyword = keyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize
-
             };
             var data = await _userApiClient.GetUsersPagings(request);
             return View(data);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Login()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
