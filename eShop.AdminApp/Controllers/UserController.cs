@@ -49,12 +49,14 @@ namespace eShop.AdminApp.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return View(ModelState);
+            //return StatusCode(500);
 
             var token = await _userApiClient.Authenticate(request);
 
