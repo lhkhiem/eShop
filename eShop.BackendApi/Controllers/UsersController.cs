@@ -32,7 +32,7 @@ namespace eShop.BackendApi.Controllers
             var resultToken = await _userService.Authencate(request);
             if (string.IsNullOrEmpty(resultToken))
             {
-                return BadRequest("Username or password is incorrect.");
+                return BadRequest("Tên đăng nhập hoặc mật khẩu không đúng!");
             }
             return Ok(resultToken);
         }
@@ -50,9 +50,10 @@ namespace eShop.BackendApi.Controllers
             }
             return Ok();
         }
+
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery]GetUserPagingRequest request)
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         {
             var products = await _userService.GetUsersPaging(request);
             return Ok(products);
