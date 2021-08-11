@@ -1,18 +1,18 @@
-﻿using eShop.Data.EF;
+﻿using eShop.Application.Common;
+using eShop.Data.EF;
 using eShop.Data.Entities;
 using eShop.Utilities.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
+using eShop.ViewModels.Catalog.ProductImages;
 using eShop.ViewModels.Catalog.Products;
 using eShop.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
-using System.Net.Http.Headers;
-using System.IO;
-using eShop.Application.Common;
 using Microsoft.EntityFrameworkCore;
-using eShop.ViewModels.Catalog.ProductImages;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace eShop.Application.Catalog.Products
 {
@@ -173,7 +173,7 @@ namespace eShop.Application.Catalog.Products
                 Id = product.Id,
                 DateCreated = product.DateCreated,
                 Description = productTranslation != null ? productTranslation.Description : null,
-                LanguageId = productTranslation.LanguageId,
+                LanguageId = productTranslation != null ? productTranslation.LanguageId : null,
                 Details = productTranslation != null ? productTranslation.Details : null,
                 Name = productTranslation != null ? productTranslation.Name : null,
                 OriginalPrice = product.OriginalPrice,
