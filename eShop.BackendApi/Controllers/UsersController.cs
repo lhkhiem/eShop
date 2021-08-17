@@ -44,7 +44,7 @@ namespace eShop.BackendApi.Controllers
             {
                 return BadRequest("Register not successfull");
             }
-            return Ok();
+            return Ok(result);
         }
 
         //PUT: http://localhost/api/users/id

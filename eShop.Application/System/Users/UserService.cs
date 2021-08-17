@@ -30,51 +30,15 @@ namespace eShop.Application.System.Users
             _config = config;
         }
 
-        //public async Task<ApiResult<string>> Authencate(LoginRequest request)
-        //{
-        //    var user = await _userManager.FindByNameAsync(request.UserName);
-        //    if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại"); ;
-
-        //    var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
-        //    if (!result.Succeeded)
-        //    {
-        //        return new ApiErrorResult<string>("Tên đăng nhập hoặc mật khẩu không đúng");
-        //    }
-        //    var roles = await _userManager.GetRolesAsync(user);
-        //    var claims = new[]
-        //    {
-        //        new Claim(ClaimTypes.Email,user.Email),
-        //        new Claim(ClaimTypes.GivenName,user.FirstName),
-        //        new Claim(ClaimTypes.Role, string.Join(";",roles)),
-        //        new Claim(ClaimTypes.Name, request.UserName)
-        //    };
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        //    var token = new JwtSecurityToken(_config["Tokens:Issuer"],
-        //        _config["Tokens:Issuer"],
-        //        claims,
-        //        expires: DateTime.Now.AddHours(3),
-        //        signingCredentials: creds);
-
-        //    return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
-        //}
-        public async Task<LoginRespone> Authencate(LoginRequest request)
+        public async Task<ApiResult<string>> Authencate(LoginRequest request)
         {
-            var res = new LoginRespone();
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null)
-            {
-                res.Error = "Tài khoản không tồn tại";
-                return res;
-            }
-
+            if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại"); ;
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
-                res.Error = "Tên đăng nhập hoặc mật khẩu không đúng";
-                return res;
+                return new ApiErrorResult<string>("Tên đăng nhập hoặc mật khẩu không đúng");
             }
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -92,13 +56,49 @@ namespace eShop.Application.System.Users
                 claims,
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
-            res.FirstName = user.FirstName;
-            res.LastName = user.LastName;
-            res.PhoneNumber = user.PhoneNumber;
-            res.UserName = user.UserName;
-            res.TokenString = new JwtSecurityTokenHandler().WriteToken(token);
-            return res;
+
+            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
         }
+        //public async Task<LoginRespone> Authencate2(LoginRequest request)
+        //{
+        //    var res = new LoginRespone();
+        //    var user = await _userManager.FindByNameAsync(request.UserName);
+        //    if (user == null)
+        //    {
+        //        res.Error = "Tài khoản không tồn tại";
+        //        return res;
+        //    }
+
+
+        //    var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
+        //    if (!result.Succeeded)
+        //    {
+        //        res.Error = "Tên đăng nhập hoặc mật khẩu không đúng";
+        //        return res;
+        //    }
+        //    var roles = await _userManager.GetRolesAsync(user);
+        //    var claims = new[]
+        //    {
+        //        new Claim(ClaimTypes.Email,user.Email),
+        //        new Claim(ClaimTypes.GivenName,user.FirstName),
+        //        new Claim(ClaimTypes.Role, string.Join(";",roles)),
+        //        new Claim(ClaimTypes.Name, request.UserName)
+        //    };
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        //    var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+        //        _config["Tokens:Issuer"],
+        //        claims,
+        //        expires: DateTime.Now.AddHours(3),
+        //        signingCredentials: creds);
+        //    res.FirstName = user.FirstName;
+        //    res.LastName = user.LastName;
+        //    res.PhoneNumber = user.PhoneNumber;
+        //    res.UserName = user.UserName;
+        //    res.TokenString = new JwtSecurityTokenHandler().WriteToken(token);
+        //    return res;
+        //}
 
         public async Task<ApiResult<UserVm>> GetById(Guid id)
         {

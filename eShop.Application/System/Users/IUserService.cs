@@ -7,8 +7,8 @@ namespace eShop.Application.System.Users
 {
     public interface IUserService
     {
-        //Task<ApiResult<string>> Authencate(LoginRequest request);
-        Task<LoginRespone> Authencate(LoginRequest request);
+        Task<ApiResult<string>> Authencate(LoginRequest request);
+        //Task<LoginRespone> Authencate(LoginRequest request);
 
         Task<ApiResult<bool>> Register(RegisterRequest request);
 

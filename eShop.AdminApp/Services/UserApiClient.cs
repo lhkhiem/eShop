@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -83,7 +81,11 @@ namespace eShop.AdminApp.Services
             var response = await client.PostAsync($"/api/users", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
+            {
+                var temp = JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+            }
+
 
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
@@ -102,9 +104,13 @@ namespace eShop.AdminApp.Services
             var response = await client.PutAsync($"/api/users/{id}", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+            {
+                var temp = JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+                return temp;
+            }
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            var temp2 = JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            return temp2;
         }
     }
 }
